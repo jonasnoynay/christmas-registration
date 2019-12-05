@@ -1,0 +1,26 @@
+.grid-login__container {
+    background: $color--white;
+    max-width: 530px;
+    margin: auto;
+    
+    @include wh(100%, 100%);
+    @include position(absolute, 0, null, 0, null);
+    @include boxsh(0 19px 38px rgba(0,0,0,0.30));
+    @include respondTo(max-sm) {
+        max-width: 100%;
+    }
+}
+
+.grid-login__container-inner {
+    padding: 0 12%;
+
+    @include wh(100%, auto);
+    @include position(absolute, 50%, 0, 0, 50%);
+    @include translate(-50%, -50%);
+}
+
+.login-error-message {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 17px;
+}

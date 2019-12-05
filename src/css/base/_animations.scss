@@ -1,0 +1,317 @@
+@include keyframes('brightlightsred') {
+    0% { box-shadow: 0 0 150px 150px #e0541f; opacity: 0.04; }
+    25% { box-shadow: 0 0 300px 300px #e0541f; opacity: 0.3; }
+    50% { box-shadow: 0 0 150px 150px #e0541f; opacity: 0.04; }
+    75% { box-shadow: 0 0 300px 300px #e0541f; opacity: 0.3; }
+    100% { box-shadow: 0 0 150px 150px #e0541f; opacity: 0.04; }
+}
+@include keyframes('brightlightsyellow') {
+    0% { box-shadow: 0 0 150px 150px #ffe879; opacity: 0.04; }
+    25% { box-shadow: 0 0 300px 300px #ffe879; opacity: 0.3; }
+    50% { box-shadow: 0 0 150px 150px #ffe879; opacity: 0.04; }
+    75% { box-shadow: 0 0 300px 300px #ffe879; opacity: 0.3; }
+    100% { box-shadow: 0 0 150px 150px #ffe879; opacity: 0.04; }
+}
+
+@keyframes spinnerpointer {
+  0% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  25% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  50% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  75% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+}
+
+@keyframes spinnerstopping {
+  0% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  1% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  2% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  3% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  4% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  5% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  6% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  7% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  8% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  9% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  10% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  11% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  12% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  13% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  14% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  15% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  16% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  17% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  18% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  19% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  20% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  21% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  22% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  23% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  24% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  25% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  26% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  27% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  28% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  29% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  30% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  32% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  34% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  36% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  38% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  40% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  42% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  44% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  46% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  48% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  50% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  52% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  54% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  56% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  58% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  60% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  65% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  70% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  75% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+
+  85% {
+    @include prefix(transform, translateY(-50%));
+  }
+
+  95% {
+    @include prefix(transform, translateY(-50%) rotateZ(33deg));
+  }
+}
+
+@keyframes motionblur {
+  0%
+  {
+    left: 0;
+    text-shadow: 0 0 0 rgba(255,255,255,0);
+    box-shadow: 0 0 0 rgba(200,0,0,0);
+  }
+  5%
+  {
+    left: 0;
+    transform-origin: 0 0;
+    transform: scaleX(0.85);
+  }
+  25%
+  {
+    text-shadow: -5px 0 5px rgba(255,255,255,1);
+    box-shadow: -15px 0 10px -5px rgba(200,0,0,0.5);
+    transform: scaleX(1.1) skewX(-4deg);
+  }
+  50%
+  {
+    left: 300px;
+    text-shadow: 0 0 0 rgba(255,255,255,0);
+    box-shadow: 0 0 0 rgba(200,0,0,0);
+    transform: scaleX(1) skewX(0deg);
+  }
+  55%
+  {
+    left: 300px;
+    transform-origin: 100% 0;
+    transform: scaleX(0.85);
+  }
+  75%
+  {
+    text-shadow: 5px 0 5px rgba(255,255,255,1);
+    box-shadow: 15px 0 10px -5px rgba(200,0,0,0.5);
+    transform: scaleX(1.1) skewX(4deg);
+  }
+  100%
+  {
+    left: 0px;
+    text-shadow: 0 0 0 rgba(255,255,255,0);
+    box-shadow: 0 0 0 rgba(200,0,0,0);
+    transform: scaleX(1) skewX(0deg);
+  }
+}
+
+.motionblur {
+  animation: motionblur 1s;
+}
+
+[class|="confetti"] {
+    position: absolute;
+  }
+  
+  $colors: (#d13447, #ffbf00, #ff4081 );
+  
+  @for $i from 0 through 150 {
+    $w: random(20);
+    $l: random(100);
+    .confetti-#{$i} {
+      width: #{$w}px;
+      height: #{$w*0.4}px;
+      background-color: nth($colors, random(3));
+      top: -10%;
+      left: unquote($l+"%");
+      opacity: random() + 0.5;
+      transform: rotate(#{random()*360}deg);
+      animation: drop-#{$i} unquote(4+random()+"s") unquote(random()+"s") infinite;
+    }
+  
+    @keyframes drop-#{$i} {
+      100% {
+        top: 110%;
+        left: unquote($l+random(15)+"%");
+      }
+    }
+  }

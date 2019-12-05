@@ -1,0 +1,79 @@
+.raffle-main-container {
+    @include position(absolute, $top: 0, $right: null, $bottom: null, $left: 0);
+    @include wh(100%, 100%);
+
+    overflow: hidden;
+}
+
+.div-spinner {
+    position: relative;
+    width: 50%;
+    max-width: 800px;
+    margin: auto;
+    padding: 0 50px;
+}
+
+.spinner-rotate {
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid #000;
+    width: 100%;
+    height: 100%;
+}
+
+.spinner-ring  {
+    @include wh(100%, 100%);
+    list-style-type: none;
+    padding: 0 0 100% 0;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+
+    @include transition('all 4s ease-out');
+}
+
+$pies: 12;
+
+.li-pie {
+    background: #ccc;
+    position: absolute;
+    width: 100%;
+    height: 0;
+    padding: 0 0 27% 0;
+    top: 50%;
+    clip-path: polygon(100% 0%, 100% 0%, 50% 50%, 100% 100%);
+
+    &:nth-child(odd) {
+        background: red;
+    }
+
+    &.active {
+        background: #c3955b;
+    }
+}
+
+.spinner-pointer {
+    @include wh(20%, 0);
+    @include position(absolute, $top: 50%, $right: null, $bottom: null, $left: calc(50% + 8px));
+    @include translateY(-50%);
+    @include transition(0.2s ease);
+
+    padding: 0 0 17% 0;
+    //clip-path: polygon(60% 50%, 100% 0%, 95% 50%, 100% 100%);
+    clip-path: polygon(0% 80%, 0 80%, 0% 20%, 100% 50%);
+    z-index: 1;
+    background: rgba(255, 212, 0, 0.85);
+
+    &.isSpinning {
+            animation: spinnerpointer 0.1s infinite;
+    }
+    &.stopped {
+            animation: spinnerstopping 3s ease-out;
+    }
+}
+
+@for $i from 0 to $pies {
+    .li-pie:nth-child(#{$i + 1}) {
+        transform: translateY(-50%) rotateZ($i * (360 / $pies)+deg);
+    }
+}

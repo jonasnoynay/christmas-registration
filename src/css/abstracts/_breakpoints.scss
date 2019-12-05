@@ -1,0 +1,32 @@
+$breakpoints: (
+
+  /*=== Standard Breakpoints ===*/
+  'max-xxl'    : (max-width: 2560px),
+  'min-xxl'    : (min-width: 1921px),
+  
+  'max-xl'    : (max-width: 1920px),
+  'min-xl'    : (min-width: 1441px),
+
+  'max-lg'    : (max-width: 1440px),
+  'min-lg'    : (min-width: 1025px),
+
+  'max-md'    : (max-width: 1024px),
+  'min-md'    : (min-width: 641px),
+
+  'max-sm'    : (max-width: 640px),
+  'min-sm'    : (min-width: 471px),
+);
+
+@mixin respondTo($breakpoint) {
+  $mapped: map-get($breakpoints, $breakpoint);
+
+  @if not $mapped {
+    @error "`#{$breakpoint}` is not a valid breakpoint";
+  } @else {
+    $first-key: nth(map-keys($mapped), 1);
+    
+    @media ($first-key: map-get($mapped, $first-key)) {
+      @content;
+    }
+  }
+}

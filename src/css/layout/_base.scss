@@ -1,0 +1,10 @@
+.base-container {
+    min-height: 100%;
+
+    @include position(absolute, 0, 0, null, 0);
+    @include wh(100%, auto);
+}
+
+.inner-container {
+    padding: 2em 1em;
+}

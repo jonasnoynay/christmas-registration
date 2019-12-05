@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Venera';
+    src: url('/src/fonts/Venera-100.otf');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Venera';
+    src: url('/src/fonts/Venera-300.otf');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Venera';
+    src: url('/src/fonts/Venera-500.otf');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Venera';
+    src: url('/src/fonts/Venera-700.otf');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Venera';
+    src: url('/src/fonts/Venera-900.otf');
+    font-weight: 900;
+    font-style: normal;
+}
+
+$font-stack: Venera, sans-seriff;

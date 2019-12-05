@@ -1,0 +1,107 @@
+.menu-sidebarToggle__show {
+    margin-left: 260px;
+}
+
+.menu-sidebarToggle__hide {
+    margin-left: 0;
+    width: 0;
+}
+
+.menu-btn__sidebarToggle {
+    @include boxsh($box-shadow--2);
+}
+
+.brightlights-container {
+    position: fixed;
+}
+
+.brightlights-point {
+    @include wh(5px, 5px);
+    @include bradius('all', 50%);
+
+    position: fixed;
+}
+
+.brightlights-point:nth-child(odd) {
+    @include animate(brightlightsyellow 2500ms infinite);
+    background: #ffe879;
+    opacity: 0.04;
+}
+
+.brightlights-point:nth-child(even) {
+    @include animate(brightlightsred 5000ms infinite);
+    background: #e0541f;
+    opacity: 0.04;
+}
+
+.brightlights-point__1 {
+    left: 3%;
+    top: 8%;
+
+    @include respondTo(max-md) {
+        left: -9%;
+        top: -6%;
+    }
+}
+
+.brightlights-point__2 {
+    left: 31%;
+    top: -1%;
+
+    @include respondTo(max-md) {
+        left: 28%;
+        top: -43%;
+    }
+}
+
+.brightlights-point__3 {
+    left: 63%;
+    top: -18%;
+
+    @include respondTo(max-md) {
+        left: 63%;
+        top: -45%;
+    }
+}
+
+.brightlights-point__4 {
+    right: 18%;
+    top: -7%;
+
+    @include respondTo(max-md) {
+        right: 18%;
+        top: -29%;
+    }
+}
+
+.brightlights-point__5 {
+    right: -4%;
+    top: 13%;
+
+    @include respondTo(max-md) {
+        right: -17%;
+        top: -9%;
+    }
+}
+
+.header-title {
+    @include wh(750px, 500px);
+    @include bgs($img: '/src/images/title.png', $h:100%, $w:100%, $type: null);
+
+    margin: 2% auto 0 auto;
+
+    @include respondTo('max-md') {
+        @include wh(400px, 290px);
+        
+        margin-top: 65px;
+    }
+    &.header-sub {
+        @include wh(285px, 185px);
+
+        margin: 1% auto 0 auto;
+
+        @include respondTo('max-md') {
+            @include wh(150px, 127px);
+        }
+    }
+}
