@@ -139,7 +139,7 @@ class RaffleMachine extends Component {
                             <ul className={'ul-ring '+ (!this.state.stopped ? 'spinning' : '')} style={{ transform: `rotateX(${this.state.spin}deg)` }}>
                                 {employees.map((employee, idx) =>
                                     <li className={'li-slot'} key={'slot-'+idx} style={{ transform:  `rotateX(${(slotAngle * idx)}deg) translateZ(${REEL_RADIUS}px)` }}>
-                                        <Typography variant="h5" className={'li-slot-name '+classes.slotName}>{employee.firstname} {employee.lastname}</Typography>
+                                        <Typography variant="h5" className={'li-slot-name '+classes.slotName}>{employee.fullname}</Typography>
                                     </li>
                                 )}
                             </ul>
@@ -151,7 +151,7 @@ class RaffleMachine extends Component {
                 {!_.isEmpty(this.state.winner) &&
                         <div className={classes.winnerDiv} key={'congrats-1'}>
                             <Typography variant="h4" className={classes.congrats}>CONGRATULATIONS</Typography>
-                            <Typography variant="h4" className={classes.congratsName}>{this.state.winner.firstname} {this.state.winner.lastname}</Typography>
+                            <Typography variant="h4" className={classes.congratsName}>{this.state.winner.fullname}</Typography>
                             <Button variant="contained" key={'button-2'} color="secondary" className={classes.drawStart} onClick={this.reset}>DONE</Button>
                         </div>
                 }

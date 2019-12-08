@@ -147,7 +147,7 @@ class ManageRegistration extends Component {
         let dataToChange = employeesTable.data[tableMeta.rowIndex];
 
         if(dataToChange) {
-            let dataCol = ['idnumber', 'firstname', 'lastname', 'registered'];
+            let dataCol = ['idnumber', 'fullname', 'registered'];
             let updateData = {};
             let id = dataToChange._id;
 
@@ -176,7 +176,8 @@ class ManageRegistration extends Component {
         }
         else{
             let insertData = [];
-            if(resp.cols.length >= 3 && resp.rows.length > 1) {
+            if(resp.cols.length >= 2 && resp.rows.length > 1) {
+                resp.rows.shift();
                 insertData = resp.rows;
                 this.props.dispatch(employeeActions.insertEmployeeExcel(insertData)).then(data => {
                     this.setState({
@@ -186,7 +187,7 @@ class ManageRegistration extends Component {
             } else {
                 this.setState({
                     openDialog: true,
-                    dialogText: 'Cannot export excel file. Make sure to make 3 columns <div>(ID Number, Firstname, Lastname )</div>'
+                    dialogText: 'Cannot export excel file. Make sure to make 2 columns <div>(ID Number, Fullname )</div><div>And first row as header.</div>'
                 });
             }
 
@@ -208,6 +209,7 @@ class ManageRegistration extends Component {
         else{
             let insertData = [];
             if(resp.cols.length >= 2 && resp.rows.length > 1) {
+                resp.rows.shift();
                 insertData = resp.rows;
                 this.props.dispatch(participantActions.insertParticipantExcel(insertData)).then(data => {
                     this.setState({
@@ -217,7 +219,7 @@ class ManageRegistration extends Component {
             } else {
                 this.setState({
                     openDialog: true,
-                    dialogText: 'Cannot export excel file. Make sure to make 2 columns <div>(Firstname, Lastname )</div>'
+                    dialogText: 'Cannot export excel file. Make sure to make 1 column <div>(Fullname)</div><div>And first row is header.</div>'
                 });
             }
 
@@ -251,23 +253,7 @@ class ManageRegistration extends Component {
                 },
             },
             {
-                name: 'Firstname',
-                options: {
-                    filter: false,
-                    customBodyRender: (value, tableMeta, updateValue) => {
-                        return (
-                            tableMeta.rowIndex == empRowToUpdate ? 
-                                <FormControlLabel
-                                    value={value}
-                                    control={<TextField value={value} />}
-                                    onChange={event => updateValue(event.target.value)}
-                                /> : value
-                        );
-                    }
-                }
-            },
-            {
-                name: 'Lastname',
+                name: 'Fullname',
                 options: {
                     filter: false,
                     customBodyRender: (value, tableMeta, updateValue) => {
@@ -316,13 +302,7 @@ class ManageRegistration extends Component {
 
         const participantColumns = [
             {
-                name: 'Firstname',
-                options: {
-                    filter: false
-                }
-            },
-            {
-                name: 'Lastname',
+                name: 'Fullname',
                 options: {
                     filter: false
                 }
@@ -418,7 +398,6 @@ class ManageRegistration extends Component {
                 }
             },
             onTableChange: (action, tableState) => {
-                console.log(action, tableState);
                 switch(action) {
                     case 'changePage':
                     this.setState({

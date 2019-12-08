@@ -28,6 +28,8 @@
     display: block;
     margin: 0 auto;
     position: relative;
+    border-radius: 50%;
+    overflow: hidden;
 
     @include transition('all 4s ease-out');
 }
@@ -42,6 +44,7 @@ $pies: 12;
     padding: 0 0 27% 0;
     top: 50%;
     clip-path: polygon(100% 0%, 100% 0%, 50% 50%, 100% 100%);
+    perspective: 950px;
 
     &:nth-child(odd) {
         background: red;
@@ -62,7 +65,7 @@ $pies: 12;
     //clip-path: polygon(60% 50%, 100% 0%, 95% 50%, 100% 100%);
     clip-path: polygon(0% 80%, 0 80%, 0% 20%, 100% 50%);
     z-index: 1;
-    background: rgba(255, 212, 0, 0.85);
+    background: rgba(255, 231, 115, 0.85);
 
     &.isSpinning {
             animation: spinnerpointer 0.1s infinite;

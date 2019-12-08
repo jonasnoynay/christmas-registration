@@ -11,6 +11,8 @@ import SpinningWheel from '../_components/SpinningWheel';
 
 import Base from './Base';
 
+const winningList = [];
+
 const styles = theme => ({
     header: {
         color: '#ffffff',
@@ -113,7 +115,17 @@ class Spin extends Component {
     }
 
     componentDidMount = () => {
-        this.props.dispatch(prizeActions.getPrizeJson());
+        this.props.dispatch(prizeActions.getPrizeJson()).then(() => {
+            const { prizes } = this.props;
+
+            prizes.forEach( (prize, idx) => { 
+                if(prize.quantity > 0) { 
+                    for(var i=0;i<prize.quantity;i++) { 
+                        winningList.push(idx) 
+                    }   
+                }  
+            });
+        });
     }
 
     handleClose = () => {
@@ -126,24 +138,13 @@ class Spin extends Component {
 
     play = () => {
 
-        const winningList = [];
-        const { prizes } = this.props;
-
-        prizes.forEach( (prize, idx) => { 
-            if(prize.quantity > 0) { 
-                for(var i=0;i<prize.quantity;i++) { 
-                    winningList.push(idx) 
-                }   
-            }  
-        });
-
         let quantityIdx = Math.floor(Math.random()*(winningList.length));
 
         let removeFromWin = winningList.splice(quantityIdx, 1);
         
         if(removeFromWin.length == 0) return alert('No more prizes');
 
-        this.spiningWheelEl.current.start(removeFromWin);
+        this.spiningWheelEl.current.start(removeFromWin, winningList);
 
         //this.setState({ toWin: idx });
 

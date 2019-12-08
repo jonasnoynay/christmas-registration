@@ -116,11 +116,11 @@ class SearchHead extends Component {
     }
 
     getSuggestionValue = (suggestion) => {
-        return `${suggestion.firstname} ${suggestion.lastname}`;
+        return `${suggestion.fullname}`;
     }
 
     renderSuggestion = (suggestion, { query, isHighlighted }) => {
-        let text = `${suggestion.id_number}: ${suggestion.firstname} ${suggestion.lastname}`;
+        let text = `${suggestion.id_number}: ${suggestion.fullname}`;
         const matches = match(text, query);
         const parts = parse(text, matches);
 

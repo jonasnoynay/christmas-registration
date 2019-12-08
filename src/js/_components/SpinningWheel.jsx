@@ -56,6 +56,12 @@ const styles = theme => ({
         fontSize: 80,
         fontWeight: 600
     },
+    congrats4: {
+        color: '#ffd3d3',
+        textAlign: 'center',
+        fontSize: 70,
+        fontWeight: 800
+    },
     congratsName: {
         fontWeight: 800,
         fontSize: 45,
@@ -68,14 +74,17 @@ const styles = theme => ({
     },
 
     prizeName: {
-        fontSize: '1.3vw',
+        fontSize: '1.1vw',
         fontWeight: 800,
-        lineHeight: '9',
         verticalAlign: 'middle',
         textAlign: 'right',
         padding: '0 25px',
         color: '#fff',
-        paddingLeft: 'calc(100% - 285px)'
+        paddingLeft: 'calc(100% - 285px)',
+        transform: 'translateY(-50%) translateX(14%) rotateY(-70deg)',
+        position: 'absolute',
+        right: '0',
+        top: '50%'
     }
 });
 
@@ -91,7 +100,9 @@ class SpinningWheel extends Component {
             stopped: false,
             spinIdx: 0,
             stoppedAt: 0,
-            showConfetti: false
+            showConfetti: false,
+            isFinished: false,
+            winningList: []
         }
 
         this.si = null;
@@ -122,10 +133,11 @@ class SpinningWheel extends Component {
         });
     }
 
-    start = (idx) => {
+    start = (idx, winningList) => {
         
         this.setState({
-            isSpinning: true
+            isSpinning: true,
+            winningList
         });
 
         this.si = setInterval(() => {
@@ -173,14 +185,16 @@ class SpinningWheel extends Component {
     }
 
     reset = () => {
+        const { winningList } = this.state;
+
         this.setState({
             hasWinner: false,
-            stopped: false
+            stopped: false,
+            isFinished: winningList.length > 0 ? false : true
         });
 
         clearInterval(this.si);
         this.si = null;
-
         //this.props.resetMachine();
     }
     
@@ -188,63 +202,79 @@ class SpinningWheel extends Component {
 
         const { classes, prizelist } = this.props;
 
-        const { spinIdx, hasWinner, winner, isSpinning, stopped } = this.state;
+        const { spinIdx, hasWinner, winner, isSpinning, stopped, isFinished } = this.state;
 
         //+' '+ ((spinIdx % SLOTS_PER_REEL) == idx ? 'active' : '')
 
         return (
             <React.Fragment>
-                <div className={'div-spinner'}>
-                    <div className={'spinner-rotate'}>
-                        <ul className={'spinner-ring '} style={{ transform: `rotateZ(${this.state.spin}deg)` }}>
-                            {prizelist.map((prize, idx) =>
-                                <li className={'li-pie li-pie-'+idx} key={'pie-'+idx}  style={{ background: prize['bgColor'] }}>
-                                    <Typography variant="h5" className={classes.prizeName}>{prize.name}</Typography>
-                                </li>
-                            )}
-                        </ul>
-                        {this.props.children}
-                        <div className={'spinner-pointer '+(isSpinning ? 'isSpinning' : (stopped ? 'stopped' : ''))} ref={this.spinPointer}></div>
+                {isFinished ? 
+                <React.Fragment>
+                    <div key={'confetticon-2'} className={classes.confettiWrapper}>
+                        {this.createConfetti()}
                     </div>
-                </div>
+                    <div className={classes.paper} style={{ marginTop: 200 }}>
+                    <div className={classes.winnerDiv} key={'congrats-3'}>
+                            <Typography variant="h4" className={classes.congrats4}>CONGRATULATIONS</Typography>
+                            <Typography variant="h4" className={classes.congrats4}>TO ALL WINNERS!!</Typography>
+                        </div>
+                    </div>
+                </React.Fragment>
+            :
+                    <React.Fragment>
+                        <div className={'div-spinner'}>
+                            <div className={'spinner-rotate'}>
+                                <ul className={'spinner-ring '} style={{ transform: `rotateZ(${this.state.spin}deg)` }}>
+                                    {prizelist.map((prize, idx) =>
+                                        <li className={'li-pie li-pie-'+idx} key={'pie-'+idx}  style={{ background: prize['bgColor'] }}>
+                                            <Typography variant="h5" className={classes.prizeName}>{prize.name}</Typography>
+                                        </li>
+                                    )}
+                                </ul>
+                                {this.props.children}
+                                <div className={'spinner-pointer '+(isSpinning ? 'isSpinning' : (stopped ? 'stopped' : ''))} ref={this.spinPointer}></div>
+                            </div>
+                        </div>
 
-                {hasWinner &&
-                        <Modal
-                        aria-labelledby="simple-modal-title"
-                        aria-describedby="simple-modal-description"
-                        open={hasWinner}
-                        className={classes.modal}
-                        closeAfterTransition
-                        BackdropComponent={Backdrop}
-                        BackdropProps={{
-                        timeout: 500,
-                        onClick:this.reset
-                        }}
-                        >
-                            <Fade in={this.props.open}>
-                            <React.Fragment>
-                                {this.state.showConfetti ? (
-                                    <div key={'confetticon-1'} className={classes.confettiWrapper}>
-                                        {this.createConfetti()}
-                                    </div>
-                                ) : null}
-                                <Zoom key={'zoom-1'} in={hasWinner} timeout={{
-                                    appear: 500,
-                                    enter: 300,
-                                    exit: 500,
-                                   }}>
-                                <div className={classes.paper}>
-                                <div className={classes.winnerDiv} key={'congrats-1'}>
-                                        <Typography variant="h4" className={classes.congrats}>CONGRATULATIONS</Typography>
-                                        <Typography variant="h4" className={classes.congrats2}>YOU WON</Typography>
-                                        <Typography variant="h4" className={classes.congrats3}>{winner.name}</Typography>
-                                        <Button variant="contained" key={'button-2'} color="secondary" className={classes.drawStart} onClick={this.reset}>DONE</Button>
-                                    </div>
-                                </div>
-                                </Zoom>
-                            </React.Fragment>
-                            </Fade>
-                        </Modal>
+                        {hasWinner &&
+                                <Modal
+                                aria-labelledby="simple-modal-title"
+                                aria-describedby="simple-modal-description"
+                                open={hasWinner}
+                                className={classes.modal}
+                                closeAfterTransition
+                                BackdropComponent={Backdrop}
+                                BackdropProps={{
+                                timeout: 500,
+                                onClick:this.reset
+                                }}
+                                >
+                                    <Fade in={this.props.open}>
+                                    <React.Fragment>
+                                        {this.state.showConfetti ? (
+                                            <div key={'confetticon-1'} className={classes.confettiWrapper}>
+                                                {this.createConfetti()}
+                                            </div>
+                                        ) : null}
+                                        <Zoom key={'zoom-1'} in={hasWinner} timeout={{
+                                            appear: 500,
+                                            enter: 300,
+                                            exit: 500,
+                                        }}>
+                                        <div className={classes.paper}>
+                                        <div className={classes.winnerDiv} key={'congrats-1'}>
+                                                <Typography variant="h4" className={classes.congrats}>CONGRATULATIONS</Typography>
+                                                <Typography variant="h4" className={classes.congrats2}>YOU WON</Typography>
+                                                <Typography variant="h4" className={classes.congrats3}>{winner.name}</Typography>
+                                                <Button variant="contained" key={'button-2'} color="secondary" className={classes.drawStart} onClick={this.reset}>DONE</Button>
+                                            </div>
+                                        </div>
+                                        </Zoom>
+                                    </React.Fragment>
+                                    </Fade>
+                                </Modal>
+                        }
+                    </React.Fragment>
                 }
             </React.Fragment>
         )
