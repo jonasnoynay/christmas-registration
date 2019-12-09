@@ -189,7 +189,7 @@ class Raffle extends Component {
                                     {participants.length > 0 ? (
                                     <RaffleMachine resetMachine={this.handleClose} onDrawEnd={this.handleDrawEnd} key={'machine-1'} employees={participants}></RaffleMachine>
                                 ) : (
-                                    <Fab variant="extended" className={'play-button'} onClick={()=> { this.play() }}>PLAY</Fab>
+                                    <Fab variant="extended" className={'play-button'} onClick={()=> { this.play() }}>DRAW</Fab>
                                 )}
                             </div>
                     </div>

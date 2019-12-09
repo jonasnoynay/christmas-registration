@@ -103,7 +103,8 @@ class Spin extends Component {
 
         this.state = {
             showConfetti: false,
-            toWin: false
+            toWin: false,
+            isPlaying: false,
         }
 
         this.spiningWheelEl = React.createRef();
@@ -138,13 +139,27 @@ class Spin extends Component {
 
     play = () => {
 
+        const { isPlaying } = this.state;
+        
+        if(isPlaying) return;
+
+        this.setState({
+            isPlaying: true
+        });
+
         let quantityIdx = Math.floor(Math.random()*(winningList.length));
 
         let removeFromWin = winningList.splice(quantityIdx, 1);
         
         if(removeFromWin.length == 0) return alert('No more prizes');
 
-        this.spiningWheelEl.current.start(removeFromWin, winningList);
+        console.log('winningList', winningList);
+        
+        this.spiningWheelEl.current.start(removeFromWin, winningList).then(() => {
+            this.setState({
+                isPlaying: false
+            });
+        });
 
         //this.setState({ toWin: idx });
 
@@ -161,6 +176,7 @@ class Spin extends Component {
 
         return (
             <div className={'raffle-main-container'}>
+                <div className={'grid-raffle__underlay'} onClick={()=> { this.play(); }}></div>
                 <div className={'grid-raffle__container'}>
                     <div className={'grid-raffle__container-inner'}>
                         <div className={'header-title header-sub'}></div>

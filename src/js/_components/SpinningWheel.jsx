@@ -95,6 +95,7 @@ class SpinningWheel extends Component {
         this.state = {
             spin: 0,
             isSpinning: false,
+            isPlaying: false,
             hasWinner: false,
             winner: {},
             stopped: false,
@@ -135,27 +136,47 @@ class SpinningWheel extends Component {
 
     start = (idx, winningList) => {
         
-        this.setState({
-            isSpinning: true,
-            winningList
+        return new Promise((resolve, reject) =>{
+
+            const { isPlaying } = this.state;
+
+            if(isPlaying) {
+                console.log('Not done spinning');
+                reject('Not Done spinning');
+            }
+
+            this.setState({
+                isSpinning: true,
+                isPlaying: true,
+                winningList
+            });
+    
+            this.si = setInterval(() => {
+                this.setState({
+                    spin: this.state.spin + slotAngle,
+                });
+            }, 30);
+            
+            setTimeout(() => {
+                this.stop(idx);
+            }, 5000);
+
+            setTimeout(() => {
+                this.setState({
+                    isSpinning: false,
+                    stopped: true
+                });
+            }, 6000);
+    
+            setTimeout(() => {
+                this.setState({
+                    isPlaying: false,
+                });
+                console.log('Done Spinning');
+                resolve('Spinning done');
+            }, 9000);
         });
-
-        this.si = setInterval(() => {
-            this.setState({
-                spin: this.state.spin + slotAngle,
-            });
-        }, 30);
         
-        setTimeout(() => {
-            this.stop(idx);
-        }, 5000);
-
-        setTimeout(() => {
-            this.setState({
-                isSpinning: false,
-                stopped: true
-            });
-        }, 6000);
     }
 
     stop = (idx) => {
