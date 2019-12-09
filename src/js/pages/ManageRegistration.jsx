@@ -293,7 +293,7 @@ class ManageRegistration extends Component {
                         return (
                             tableMeta.rowIndex == empRowToUpdate ? 
                             <Button size={'small'} variant="contained" color="primary" onClick={ event => { this.saveEmpRow(tableMeta) }}>Save Changes</Button> :
-                            <IconButton size={'small'} onClick={ event => { this.updateEmpRow(tableMeta.rowIndex) }}><EditIcon fontSize={'small'} /></IconButton>
+                            <IconButton size={'small'} style={{ margin: '-8px 0' }} onClick={ event => { this.updateEmpRow(tableMeta.rowIndex) }}><EditIcon fontSize={'small'} /></IconButton>
                         );
                     }
                 }

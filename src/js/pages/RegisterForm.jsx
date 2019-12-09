@@ -11,6 +11,7 @@ import {
     Refresh,
     FilterList
 } from '@material-ui/icons';
+import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
 });
@@ -23,7 +24,8 @@ class RegisterForm extends Component {
         this.state = {
             employee_id: null,
             open: false,
-            value: ''
+            value: '',
+            notFound: false
         }
 
         this.searchheadElement = React.createRef();
@@ -35,7 +37,11 @@ class RegisterForm extends Component {
     }
 
     handleSuggestionsFetchRequested = ({ value }) => {
-        this.props.dispatch(employeeActions.searchEmployees(value));
+        this.props.dispatch(employeeActions.searchEmployees(value)).then((employees) => {
+            this.setState({
+                notFound: employees.data.length == 0
+            });
+        });
     }
 
     handleSuggestionSelected = (e, { suggestion }) => {
@@ -54,22 +60,25 @@ class RegisterForm extends Component {
     }
 
     handleBackdropClick = () => {
-        this.setState({ open: false });
+        this.setState({ open: false, notFound: false });
+        this.searchheadElement.current.clearInput();
     }
 
     handleClose = () => {
         this.props.dispatch(employeeActions.closeRegisterEmployee());
         this.searchheadElement.current.clearInput();
+        this.setState({ notFound: false });
     }
 
     render = () => {
         
         const { employees, registeredEmployee } = this.props;
+        const { notFound } = this.state;
 
         return (
             <div className={'grid-register__container'}>
                 <form className={'grid-register__container-inner'}>
-                        <div className={'header-title'}></div>
+                    <div className={'header-title'}></div>
                         <div className={'search__container'}>
                             <SearchHead
                                 ref={this.searchheadElement}
@@ -77,7 +86,7 @@ class RegisterForm extends Component {
                                 onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
                                 onSuggestionSelected={this.handleSuggestionSelected}
                                 clearAll={this.clearSearchField}
-                                //onCloseInput={this.handleCloseInput}
+                                onCloseInput={this.handleClose}
                                 suggestions={employees}
                                 helpers={({ classIcon })=> {
                                     return employees.data && [
@@ -90,6 +99,9 @@ class RegisterForm extends Component {
                                     ]
                                 }}
                             />
+                            {notFound && 
+                                <div style={{ background: 'rgba(111, 28, 28, 0.75)', padding: '5px 10px' }}><Typography variant="h4" style={{ color: '#ffffff', margin: '24px 0', fontWeight: 600, fontSize: 25 }}>Name not found or already registered. Please ask the event coordinator for assistance.</Typography></div>
+                            }
                         </div>
                 </form>
                 <MaterialModal

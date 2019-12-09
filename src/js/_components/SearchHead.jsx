@@ -101,7 +101,6 @@ class SearchHead extends Component {
     }
 
     handleSuggestionsFetchRequested = ({ value }) => {
-        
     }
 
     onSuggestionSelected = () => {
