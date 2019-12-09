@@ -73,7 +73,7 @@ class RegisterForm extends Component {
                         <div className={'search__container'}>
                             <SearchHead
                                 ref={this.searchheadElement}
-                                placeholder="Search Employee name or ID"
+                                placeholder="Input your name or ID"
                                 onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
                                 onSuggestionSelected={this.handleSuggestionSelected}
                                 clearAll={this.clearSearchField}

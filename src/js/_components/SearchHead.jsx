@@ -21,18 +21,19 @@ const styles = theme => ({
         background: '#ffffff',
         padding: '0 10px',
         borderRadius: 4,
-        minHeight: 50,
+        minHeight: 75,
         marginTop: -25
     },
     searchText: {
         float: 'left',
-        fontSize: 22,
+        fontSize: 52,
         fontFamily: 'Venera',
+        fontWeight: 600,
         color: '#000000',
         background: 'none',
         border: '0',
         outline: 'none',
-        padding: '0.5em',
+        padding: '8px 5px',
         '&::placeholder': {
             color: '#000000'
         }
@@ -46,7 +47,7 @@ const styles = theme => ({
         marginTop: theme.spacing(1),
         left: '-7px',
         right: 0,
-        top: 42,
+        top: 67,
         width: 'calc(100% + 15px)',
         background: 'rgba(255, 255, 255, 0.82)'
       },
@@ -62,13 +63,13 @@ const styles = theme => ({
          float: 'right',
       },
       icon: {
-          color: '#ffffff',
-          fontSize: 40,
-          margin: '4.5px 4px 0 0',
+          color: '#000000',
+          fontSize: 52,
+          margin: '10px 4px 0 0',
           cursor: 'pointer'
       },
       item: {
-          fontSize: 24,
+          fontSize: 40,
       }
 });
 
@@ -195,7 +196,7 @@ class SearchHead extends Component {
                 {this.state.value &&
                     <div className={classes.rightDiv}>
                     {helpers({ classIcon: classes.icon })||null}
-                    <Close className={classes.icon} key={'close_search'} onClick={()=> {
+                    <Close className={classes.icon} id='closeSearch' key={'close_search'} onClick={()=> {
                         this.clearInput();
                         if(onCloseInput) onCloseInput();
                     }}/>

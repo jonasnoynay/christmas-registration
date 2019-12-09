@@ -5,16 +5,35 @@
 }
 
 .search__container {
-    width: 600px;
+    width: 1000px;
     margin: 34px auto;
 
     @include respondTo('max-md') {
-        width: calc(100% - 20px);
-        max-width: 600px;
+        width: calc(100% - 40px);
+        max-width: 850px;
 
-        .SearchHead-searchText-2 {
-            font-size: 19px;
+        > div {
+            min-height: 65px;
+        }
+
+        #search_text {
+            padding: 8px 5px;
+            font-size: 4vw;
             text-align: center;
+            vertical-align: middle;
+            line-height: 49px;
+        }
+
+        #closeSearch {
+            margin: 6px 4px 0 0;
+        }
+
+        #react-autowhatever-1 {
+            top: 57px;
+
+            ul li > div {
+                font-size: 3.6vw;
+            }
         }
     }
 }
