@@ -87,6 +87,21 @@ const updateEmployeeData = (id, data) => {
     } 
 }
 
+const addNewEmployee = (data) => {
+    return async dispatch => {
+        dispatch(runAction( employeeConstants.NEW_REQUEST ));
+        try {
+            const success = await employeeService.addNewEmployee(data).then(response => __parse(response));
+            dispatch(runAction( employeeConstants.NEW_SUCCESS, { success } ));
+            return success;
+
+        } catch (error) {
+            dispatch(runAction( employeeConstants.NEW_FAILURE, { error } ));
+            return Promise.reject(error);
+        }
+    } 
+}
+
 const insertEmployeeExcel = data => {
     return async dispatch => {
         dispatch(runAction( employeeConstants.INSERTEXCEL_REQUEST ));
@@ -132,5 +147,6 @@ export const employeeActions = {
     resetParticipants,
     insertEmployeeExcel,
     deleteEmployees,
-    updateEmployeeData
+    updateEmployeeData,
+    addNewEmployee
 }

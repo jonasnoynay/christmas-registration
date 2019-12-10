@@ -34,6 +34,21 @@ const insertParticipantExcel = data => {
     }
 }
 
+const addNewParticipant = data => {
+    return async dispatch => {
+        dispatch(runAction( participantConstants.NEW_REQUEST ));
+        try {
+            const success = await participantService.addNewParticipant(data).then(response => __parse(response));
+            dispatch(runAction( participantConstants.NEW_SUCCESS, { success } ));
+            return Promise.resolve(success);
+
+        } catch (error) {
+            dispatch(runAction( participantConstants.NEW_FAILURE, { error } ));
+            return Promise.reject(error);
+        }
+    }
+}
+
 const deleteParticipants = ids => {
     return async dispatch => {
         dispatch(runAction( participantConstants.DELETE_REQUEST ));
@@ -52,5 +67,6 @@ const deleteParticipants = ids => {
 export const participantActions = {
     getParticipantsTable,
     insertParticipantExcel,
-    deleteParticipants
+    deleteParticipants,
+    addNewParticipant
 }

@@ -13,15 +13,19 @@ import {
     Button,
     Box,
     Dialog,
+    Modal,
     CircularProgress,
     FormControlLabel,
+    FormControl,
+    FormLabel,
     TextField,
     IconButton,
     RadioGroup,
-    Radio
+    Radio,
+    Paper,
  } from '@material-ui/core';
 
- import {Edit as EditIcon, Save as SaveIcon } from '@material-ui/icons';
+ import {Edit as EditIcon, Save as SaveIcon, Add as AddIcon, PostAdd as PostAddIcon } from '@material-ui/icons';
 
  const theme = createMuiTheme({
     typography: {
@@ -46,13 +50,54 @@ const styles = theme => ({
         padding: '10px 20px'
     },
     uploadButton: {
-        marginLeft: 'auto'
+        marginLeft: '1em',
+        ...theme.btn,
+        color: '#ffffff',
+        background: '#00bfa5',
+        '&:hover': {
+            background: "#007b6b",
+         }
+      
+    },
+    addButton: {
+        marginLeft: 'auto',
+        ...theme.addButton,
+        ...theme.btn,
+        color: '#ffffff',
+        background: '#039be5',
+        '&:hover': {
+            background: "#0277bd",
+         },
+    },
+    submitButton: {
+        color: '#ffffff',
+        background: '#0277bd',
+        '&:hover': {
+            background: "#01579b",
+         },
+    },
+    deleteButton: {
+        color: '#ffffff',
+        background: '#d32f2f',
+        '&:hover': {
+            background: "#c62828",
+         },
     },
     headerBox: {
         padding: '12px 0'
     },
     dialogInner: {
         padding: '1.5rem 2.5rem'
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    modalForm: {
+        maxWidth: 450,
+        width: '100%',
+        padding: '1em 2em'
     }
 });
 
@@ -76,12 +121,35 @@ class ManageRegistration extends Component {
             empRowToUpdate: null,
             empSearchString: '',
             pSearchString: '',
+            openEmployee: false,
+            openParticipant: false,
+            idnumber: '',
+            fullname: '',
+            registered: 0,
+            participantfullname: '',
+            submitLoading: false,
+            successMessage: ''
         }
 
         this.empFile = React.createRef();
         this.participantFile = React.createRef();
 
         this.searchTimeout = null;
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange = (event) => {
+        this.setState({ [event.target.name]: event.target.value });
+    }
+
+    closeModals = () => {
+        if(!this.state.submitLoading) {
+            this.setState({
+                openEmployee: false,
+                openParticipant: false
+            });
+        }
     }
 
     componentWillMount = () => {
@@ -229,11 +297,77 @@ class ManageRegistration extends Component {
         });          
     }
 
+    openNewEmployee = () => {
+        this.setState({
+            openEmployee: true
+        });
+    }
+
+    openNewParticipant = () => {
+        this.setState({
+            openParticipant: true
+        });
+    }
+
+    handleEmployeeSubmit = (e) => {
+        e.preventDefault();
+
+        this.setState({submitLoading: true}, () => {
+            let insertData = {
+                idnumber: this.state.idnumber,
+                fullname: this.state.fullname,
+                registered: this.state.registered
+            };
+
+            this.props.dispatch(employeeActions.addNewEmployee(insertData)).then(data => {
+                this.setState({
+                    submitLoading: false,
+                    successMessage: 'Employee added successfully.'
+                }, this.fetchEmployeesTable);
+            });
+        });
+    }
+
+    handleParticipantSubmit = (e) => {
+        e.preventDefault();
+
+        console.log('participantfullname', this.state.participantfullname);
+
+        this.setState({submitLoading: true}, () => {
+            let insertData = {
+                participantfullname: this.state.participantfullname
+            };
+
+            this.props.dispatch(participantActions.addNewParticipant(insertData)).then(data => {
+                this.setState({
+                    submitLoading: false,
+                    successMessage: 'Participant added successfully.'
+                }, this.fetchParticipantsTable);
+            });
+        });
+    }
+
     render = () => {
 
         const { classes, employeesTable, participantsTable } = this.props;
 
-        const { empPage, empPerPage, empTotal, pPage, pPerPage, pTotal, openDialog, dialogText, empRowToUpdate, empSearchString, pSearchString, isEmpLoading, isPLoading } = this.state;
+        const { empPage, 
+            empPerPage, 
+            empTotal, 
+            pPage, 
+            pPerPage, 
+            pTotal, 
+            openDialog, 
+            dialogText, 
+            empRowToUpdate, 
+            empSearchString, 
+            pSearchString, 
+            isEmpLoading, 
+            isPLoading, 
+            openEmployee,
+            submitLoading,
+            successMessage,
+            openParticipant } = this.state;
 
         const empListColumns = [
             {
@@ -333,7 +467,6 @@ class ManageRegistration extends Component {
                 }
             },
             onTableChange: (action, tableState) => {
-                console.log(action, tableState);
                 switch(action) {
                     case 'changePage':
                     this.setState({
@@ -454,7 +587,8 @@ class ManageRegistration extends Component {
                             <Grid item xs={7}>
                                 <Box display="flex" className={classes.headerBox}>
                                     <Typography variant="h6">Pre - Registration</Typography>
-                                    <Button variant="contained" className={classes.uploadButton} onClick={()=> this.empFile.current.click()}>UPLOAD EXCEL</Button>
+                                    <Button variant="contained" className={classes.addButton} onClick={this.openNewEmployee}><AddIcon /> EMPLOYEE</Button>
+                                    <Button variant="contained" className={classes.uploadButton} onClick={()=> this.empFile.current.click()}><PostAddIcon /> UPLOAD EXCEL</Button>
                                     <input type="file" 
                                         accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
                                         ref={this.empFile}
@@ -472,7 +606,8 @@ class ManageRegistration extends Component {
                             <Grid item xs={5}>
                             <Box display="flex" className={classes.headerBox}>
                                     <Typography variant="h6">Raffle Participants</Typography>
-                                    <Button variant="contained" className={classes.uploadButton} onClick={()=> this.participantFile.current.click()}>UPLOAD EXCEL</Button>
+                                    <Button variant="contained" className={classes.addButton} onClick={this.openNewParticipant}><AddIcon /> PARTICIPANT</Button>
+                                    <Button variant="contained" className={classes.uploadButton} onClick={()=> this.participantFile.current.click()}><PostAddIcon /> UPLOAD EXCEL</Button>
                                     <input type="file" 
                                         accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
                                         ref={this.participantFile}
@@ -494,6 +629,89 @@ class ManageRegistration extends Component {
                             <Typography variant="h5" dangerouslySetInnerHTML={{ __html: dialogText}}></Typography>
                         </div>
                     </Dialog>
+                    <Modal
+                        className={classes.modal}
+                        open={openEmployee}
+                        onBackdropClick={this.closeModals}
+                        >
+                       <Paper className={classes.modalForm}>
+                       <form onSubmit={this.handleEmployeeSubmit}>
+                        <Typography variant="h5">Add New Employee</Typography>
+                            <FormControl component="div" fullWidth>
+                                <TextField
+                                    required
+                                    label="ID Number"
+                                    className={classes.textField}
+                                    margin="normal"
+                                    fullWidth
+                                    name="idnumber"
+                                    onBlur={this.handleChange}
+                                    autoComplete="off"
+                                />
+                            </FormControl>
+                            <FormControl component="div" fullWidth>
+                                <TextField
+                                    required
+                                    label="Fullname"
+                                    className={classes.textField}
+                                    margin="normal"
+                                    fullWidth
+                                    name="fullname"
+                                    onBlur={this.handleChange}
+                                    autoComplete="off"
+                                />
+                            </FormControl>
+                            <FormControl component="div" fullWidth margin="normal">
+                                <FormLabel component="legend">Registered</FormLabel>
+                                <RadioGroup name="registered" defaultValue={'0'} onChange={this.handleChange} style={{ display: 'inline' }}>
+                                    <FormControlLabel value="1" control={<Radio />} label="Yes" />
+                                    <FormControlLabel value="0" control={<Radio />} label="No" />
+                                </RadioGroup>
+                            </FormControl>
+                            {submitLoading ? <CircularProgress style={{ margin: 'auto', display: 'block' }} /> :
+                                successMessage != '' ? 
+                                    <p>{successMessage}</p>
+                                :
+                                <React.Fragment>
+                                    <Button type="button" variant="contained" className={classes.deleteButton} style={{ float: 'right', margin: '0 0 1em 1em' }} onClick={this.closeModals}>Close</Button>
+                                    <Button type="submit" variant="contained" className={classes.submitButton} style={{ float: 'right', margin: '0 0 1em' }}>Submit</Button>
+                                </React.Fragment>
+                            }
+                        </form>
+                       </Paper>
+                    </Modal>
+                    <Modal
+                        className={classes.modal}
+                        open={openParticipant}
+                        onBackdropClick={this.closeModals}
+                        >
+                       <Paper className={classes.modalForm}>
+                       <form onSubmit={this.handleParticipantSubmit}>
+                        <Typography variant="h5">Add New Participant</Typography>
+                            <FormControl component="div" fullWidth>
+                                <TextField
+                                    required
+                                    label="Fullname"
+                                    className={classes.textField}
+                                    margin="normal"
+                                    fullWidth
+                                    name="participantfullname"
+                                    onBlur={this.handleChange}
+                                    autoComplete="off"
+                                />
+                            </FormControl>
+                            {submitLoading ? <CircularProgress style={{ margin: 'auto', display: 'block' }} /> :
+                                successMessage != '' ? 
+                                    <p>{successMessage}</p>
+                                :
+                                <React.Fragment>
+                                    <Button type="button" variant="contained" className={classes.deleteButton} style={{ float: 'right', margin: '0 0 1em 1em' }} onClick={this.closeModals}>Close</Button>
+                                    <Button type="submit" variant="contained" className={classes.submitButton} style={{ float: 'right', margin: '0 0 1em' }}>Submit</Button>
+                                </React.Fragment>
+                            }
+                        </form>
+                       </Paper>
+                    </Modal>
                 </div>
             </ThemeProvider>
         )

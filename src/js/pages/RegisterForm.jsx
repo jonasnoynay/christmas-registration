@@ -100,7 +100,7 @@ class RegisterForm extends Component {
                                 }}
                             />
                             {notFound && 
-                                <div style={{ background: 'rgba(111, 28, 28, 0.75)', padding: '5px 10px' }}><Typography variant="h4" style={{ color: '#ffffff', margin: '24px 0', fontWeight: 600, fontSize: 25 }}>Name not found or already registered. Please ask the event coordinator for assistance.</Typography></div>
+                                <div style={{ background: 'rgba(111, 28, 28, 0.75)', padding: '5px 10px', position: 'absolute' }}><Typography variant="h4" style={{ color: '#ffffff', margin: '24px 0', fontWeight: 600, fontSize: 25 }}>Name not found or already registered. Please ask the event coordinator for assistance.</Typography></div>
                             }
                         </div>
                 </form>

@@ -17,6 +17,10 @@ export default createMuiTheme({
         fontFamily: ['Venera, sans-seriff'],
         htmlFontSize: 16
     },
+    btn: {
+        fontFamily: ['Arial, sans-seriff'],
+        htmlFontSize: 12
+    },
     overrides: {
         MuiInputLabel: {
             root: {
@@ -48,5 +52,5 @@ export default createMuiTheme({
     gradientPrimary: {
         background: `linear-gradient(45deg, ${amber['400']} 30%, ${pink['A200']} 90%);`,
         color: '#ffffff'
-    }
+    },
 });

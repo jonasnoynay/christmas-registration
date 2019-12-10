@@ -22,6 +22,17 @@ const insertParticipantExcel = async data => {
     .then(unauthorized);
 }
 
+const addNewParticipant = async data => {
+    const request = {
+        method: 'POST',
+        headers: {'Content-Type' : 'application/json'},
+        body: JSON.stringify(data)
+    }
+
+    return fetch(`${config.apiUrl}/participant/new`, request)
+    .then(unauthorized);
+}
+
 const deleteParticipants = async ids => {
     const request = {
         method: 'DELETE',
@@ -36,6 +47,7 @@ const deleteParticipants = async ids => {
 export const participantService = {
     getParticipantsTable,
     insertParticipantExcel,
-    deleteParticipants
+    deleteParticipants,
+    addNewParticipant
 }
 

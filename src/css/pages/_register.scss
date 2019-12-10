@@ -7,6 +7,7 @@
 .search__container {
     width: 1000px;
     margin: 34px auto;
+    position: relative;
 
     @include respondTo('max-md') {
         width: calc(100% - 40px);

@@ -65,6 +65,17 @@ const updateEmployeeData = async (id, data) => {
     .then(unauthorized);
 }
 
+const addNewEmployee = async (data) => {
+    const request = {
+        method: 'POST',
+        headers: {'Content-Type' : 'application/json'},
+        body: JSON.stringify(data)
+    }
+
+    return fetch(`${config.apiUrl}/employee/new`, request)
+    .then(unauthorized);
+}
+
 const deleteEmployees = async ids => {
     const request = {
         method: 'DELETE',
@@ -83,5 +94,6 @@ export const employeeService = {
     getEmployeesTable,
     insertEmployeeExcel,
     deleteEmployees,
-    updateEmployeeData
+    updateEmployeeData,
+    addNewEmployee
 }
