@@ -4,6 +4,8 @@ import { Button, Typography, Modal, Backdrop, Fade, Zoom } from '@material-ui/co
 
 import PropTypes from 'prop-types';
 
+import wheelSound from '../../audio/wheel.mp3';
+
 const SLOTS_PER_REEL = 12;
 
 const REEL_RADIUS = 200;
@@ -108,6 +110,7 @@ class SpinningWheel extends Component {
 
         this.si = null;
         this.ci = null;
+        this.soundFX = new Audio(wheelSound);
 
         this.spinPointer = React.createRef();
     }
@@ -144,6 +147,8 @@ class SpinningWheel extends Component {
                 console.log('Not done spinning');
                 reject('Not Done spinning');
             }
+
+            this.soundFX.play();
 
             this.setState({
                 isSpinning: true,

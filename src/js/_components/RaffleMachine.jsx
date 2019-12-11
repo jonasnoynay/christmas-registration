@@ -10,6 +10,8 @@ const REEL_RADIUS = 200;
 
 var slotAngle = 360 / SLOTS_PER_REEL;
 
+import wheelSound from '../../audio/wheel.mp3';
+
 const styles = theme => ({
     root: {
         ...theme.gradientPrimary,
@@ -65,6 +67,8 @@ class RaffleMachine extends Component {
         }
 
         this.si = null;
+
+        this.soundFX = new Audio(wheelSound);
     }
 
     componentDidMount = () => {
@@ -80,6 +84,8 @@ class RaffleMachine extends Component {
         this.setState({
             isSpinning: true
         });
+
+        this.soundFX.play();
 
         this.si = setInterval(() => {
             this.setState({
