@@ -1,12 +1,12 @@
 .bg-container {
-    @include position($type: absolute, $top: 0, $right: null, $bottom: null, $left: 0);
+    @include position($type: fixed, $top: 0, $right: null, $bottom: null, $left: 0);
     @include wh(100%, 100%);
     @include bgs($img: '/src/images/bg.jpg', $h:100%, $w:100%, $type: cover);
 }
 
 .search__container {
     width: 1000px;
-    margin: 34px auto;
+    margin: 34px auto 10em;
     position: relative;
 
     @include respondTo('max-md') {

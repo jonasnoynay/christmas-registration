@@ -118,6 +118,7 @@ class ManageRegistration extends Component {
             openDialog: false,
             dialogText: null,
             filterRegistered: [],
+            filterWinner: [],
             empRowToUpdate: null,
             empSearchString: '',
             pSearchString: '',
@@ -135,8 +136,12 @@ class ManageRegistration extends Component {
         this.participantFile = React.createRef();
 
         this.searchTimeout = null;
+        this.empLoader = null;
+        this.pLoader = null;
 
         this.handleChange = this.handleChange.bind(this);
+        this.empTable = React.createRef();
+        this.pTable = React.createRef();
     }
 
     handleChange = (event) => {
@@ -178,13 +183,13 @@ class ManageRegistration extends Component {
     }
 
     fetchParticipantsTable = () => {
-        const { pPage, pPerPage, pSearchString } = this.state;
+        const { pPage, pPerPage, filterWinner, pSearchString } = this.state;
 
         this.setState({
             isPLoading: true
         });
 
-        this.props.dispatch(participantActions.getParticipantsTable({page: pPage+1, per_page: pPerPage, searchString: pSearchString})).then(data => {
+        this.props.dispatch(participantActions.getParticipantsTable({page: pPage+1, per_page: pPerPage, filterWinner, searchString: pSearchString})).then(data => {
             this.setState({
                 isPLoading: false,
                 pTotal: data.total
@@ -331,8 +336,6 @@ class ManageRegistration extends Component {
     handleParticipantSubmit = (e) => {
         e.preventDefault();
 
-        console.log('participantfullname', this.state.participantfullname);
-
         this.setState({submitLoading: true}, () => {
             let insertData = {
                 participantfullname: this.state.participantfullname
@@ -367,7 +370,24 @@ class ManageRegistration extends Component {
             openEmployee,
             submitLoading,
             successMessage,
+            filterRegistered,
+            filterWinner,
             openParticipant } = this.state;
+
+            clearTimeout(this.empLoader);
+            clearTimeout(this.pLoader);
+
+            if(isEmpLoading == false && employeesTable.data && employeesTable.data.length == 0) {
+                this.empLoader = setTimeout(()=> {
+                    console.log(this.empTable.current.tableRef.getElementsByTagName('h6')[0].innerHTML = '<h2>No data available.</h2>');
+                }, 2000);
+            }
+
+            if(isPLoading == false && participantsTable.data && participantsTable.data.length == 0) {
+                this.empLoader = setTimeout(()=> {
+                    console.log(this.pTable.current.tableRef.getElementsByTagName('h6')[0].innerHTML = '<h2>No data available.</h2>');
+                }, 2000);
+            }
 
         const empListColumns = [
             {
@@ -407,7 +427,11 @@ class ManageRegistration extends Component {
                 options: {
                     filter: true,
                     filterType: 'checkbox',
-                    filterList: ['Yes', 'No'],
+                    filterList: filterRegistered,
+                    filterOptions: {
+                        names: ['Yes', 'No']
+                    },
+                    
                     customBodyRender: (value, tableMeta, updateValue) => {
                         return (
                             tableMeta.rowIndex == empRowToUpdate ? 
@@ -440,7 +464,18 @@ class ManageRegistration extends Component {
                 options: {
                     filter: false
                 }
-            }
+            },
+            {
+                name: 'Winner',
+                options: {
+                    filter: true,
+                    filterType: 'checkbox',
+                    filterList: filterWinner,
+                    filterOptions: {
+                        names: ['Yes', 'No']
+                    },
+                }
+            },
         ];
 
         const options = {
@@ -453,7 +488,7 @@ class ManageRegistration extends Component {
             rowsPerPageOptions: [10,20,empTotal],
             textLabels: {
                 body: {
-                    noMatch: <CircularProgress />
+                    noMatch: <CircularProgress id="emp-loading-circle" />
                 }
             },
             onFilterChange: (changedColumn, filterList) => {
@@ -530,6 +565,16 @@ class ManageRegistration extends Component {
                     noMatch: <CircularProgress />
                 }
             },
+            onFilterChange: (changedColumn, filterList) => {
+                if(changedColumn == 'Winner') {
+                    const idx = _.findIndex(participantColumns, o => { return o.name == changedColumn });
+                    if(filterList[idx]) {
+                        this.setState({
+                            filterWinner: filterList[idx]
+                        }, this.fetchParticipantsTable);
+                    }
+                }
+            },
             onTableChange: (action, tableState) => {
                 switch(action) {
                     case 'changePage':
@@ -601,6 +646,7 @@ class ManageRegistration extends Component {
                                 columns={empListColumns}
                                 options={options}
                                 data={employeesTable.data}
+                                ref={this.empTable}
                                 />
                             </Grid>
                             <Grid item xs={5}>
@@ -620,6 +666,7 @@ class ManageRegistration extends Component {
                                 columns={participantColumns}
                                 options={pOptions}
                                 data={participantsTable.data}
+                                ref={this.pTable}
                                 />
                             </Grid>
                         </Grid>

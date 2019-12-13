@@ -87,6 +87,16 @@ const deleteEmployees = async ids => {
     .then(unauthorized);
 }
 
+const setWinner = async id => {
+    const request = {
+        method: 'PUT',
+        headers: {'Content-Type' : 'application/json'}
+    }
+
+    return fetch(`${config.apiUrl}/employee/winner/${id}`, request)
+    .then(unauthorized);
+}
+
 export const employeeService = {
     searchEmployees,
     registerEmployee,
@@ -95,5 +105,6 @@ export const employeeService = {
     insertEmployeeExcel,
     deleteEmployees,
     updateEmployeeData,
-    addNewEmployee
+    addNewEmployee,
+    setWinner
 }

@@ -23,13 +23,13 @@
 }
 
 .brightlights-point:nth-child(odd) {
-    @include animate(brightlightsyellow 2500ms infinite);
+    //@include animate(brightlightsyellow 2500ms infinite);
     background: #ffe879;
     opacity: 0.04;
 }
 
 .brightlights-point:nth-child(even) {
-    @include animate(brightlightsred 5000ms infinite);
+    //@include animate(brightlightsred 5000ms infinite);
     background: #e0541f;
     opacity: 0.04;
 }

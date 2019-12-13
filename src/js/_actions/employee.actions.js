@@ -138,6 +138,21 @@ const deleteEmployees = ids => {
     }
 }
 
+const setWinner = id => {
+    return async dispatch => {
+        dispatch(runAction( employeeConstants.WINNER_REQUEST ));
+        try {
+            const response = await employeeService.setWinner(id).then(response => __parse(response));
+            dispatch(runAction( employeeConstants.WINNER_SUCCESS, { response } ));
+            return Promise.resolve(response);
+
+        } catch (error) {
+            dispatch(runAction( employeeConstants.WINNER_FAILURE, { error } ));
+            return Promise.reject(error);
+        }
+    }
+}
+
 export const employeeActions = {
     searchEmployees,
     registerEmployee,
@@ -148,5 +163,6 @@ export const employeeActions = {
     insertEmployeeExcel,
     deleteEmployees,
     updateEmployeeData,
-    addNewEmployee
+    addNewEmployee,
+    setWinner
 }

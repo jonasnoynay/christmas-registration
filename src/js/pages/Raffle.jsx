@@ -129,6 +129,7 @@ class Raffle extends Component {
 
     handleDrawEnd = (winner) => {
         this.startConfetti();
+        if(winner && winner._id) this.props.dispatch(employeeActions.setWinner(winner._id));
     }
 
     play = () => {
