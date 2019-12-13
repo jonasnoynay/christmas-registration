@@ -15,12 +15,21 @@ const styles = theme => ({
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(4, 4, 4),
-        width: 500,
+        width: '100%',
+        maxWidth: 650,
         textAlign: 'center'
       },
       progress: {
         margin: theme.spacing(2),
       },
+      titleText: {
+        marginBottom: 30
+      },
+      tapText: {
+        color: '#000000',
+        fontWeight: '800',
+        fontSize: 30
+      }
 });
 
 class MaterialModal extends Component {
@@ -50,6 +59,7 @@ class MaterialModal extends Component {
             className={classes.modal}
             closeAfterTransition
             BackdropComponent={Backdrop}
+            onClick={onBackdropClick}
             BackdropProps={{
             timeout: 500,
             onClick:onBackdropClick
@@ -68,7 +78,8 @@ class MaterialModal extends Component {
                         exit: 500,
                        }}>
                     <div className={classes.paper}>
-                        <Typography variant="h4">{this.props.title}</Typography>
+                        <Typography variant="h3" className={classes.titleText}>{this.props.title}</Typography>
+                        <Typography variant="h5" className={classes.tapText}>Tap anywhere to close</Typography>
                         { this.props.children }
                     </div>
                     </Zoom>
