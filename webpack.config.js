@@ -76,14 +76,15 @@ module.exports = {
     },
     devServer: {
         historyApiFallback: true,
-        host: '192.168.140.183'
+        host: '192.168.2.205'
     },
     externals: {
         //global app config object
         config: JSON.stringify({
             //apiUrl: 'http://api.registration.test:8001/api/v1'
             //apiUrl: 'http://192.168.140.183:8001/api/v1'
-            apiUrl: 'https://acgdev.xyz/registration-api/api/v1'
+            //apiUrl: 'https://acgdev.xyz/registration-api/api/v1'
+            apiUrl: 'http://192.168.2.205:8001/api/v1'
         }),
         themeConfig: 'light'
     }

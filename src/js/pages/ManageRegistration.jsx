@@ -281,7 +281,7 @@ class ManageRegistration extends Component {
         }
         else{
             let insertData = [];
-            if(resp.cols.length >= 2 && resp.rows.length > 1) {
+            if(resp.cols.length >= 1 && resp.rows.length > 1) {
                 resp.rows.shift();
                 insertData = resp.rows;
                 this.props.dispatch(participantActions.insertParticipantExcel(insertData)).then(data => {

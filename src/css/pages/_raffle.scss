@@ -101,11 +101,12 @@
     &.spinning {
         
         @include transition('all 0.3s ease');
+        
 
-        .li-slot-name {
-            text-shadow: 0 0 18px #000 !important;
-            color: transparent !important;
-
+        .li-slot {
+            // text-shadow: 0 0 18px #000 !important;
+            // color: transparent !important;
+            @include prefix(filter, blur(8px));
             @include transition('all 3s ease-out');
         }
     }
